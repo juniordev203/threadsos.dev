@@ -1,0 +1,231 @@
+/*
+ * ============================================
+ * AI Growth OS — Monochrome Design System v1.1
+ * Based on Geist + Stitch Design Tokens
+ * ============================================
+ */
+
+/* --- Tailwind v4 Import --- */
+@import 'tailwindcss';
+
+/* ============================================
+   CSS Custom Properties — Dark Mode (Default)
+   ============================================ */
+:root {
+  /* --- Color: Background & Surface --- */
+  --p-background: #0C0C0C;
+  --p-surface: #0C0C0C;
+  --p-surface-dim: #121414;
+  --p-surface-bright: #383939;
+  --p-surface-container-lowest: #0D0E0F;
+  --p-surface-container-low: #1B1C1C;
+  --p-surface-container: #1F2020;
+  --p-surface-container-high: #292A2A;
+  --p-surface-container-highest: #343535;
+
+  /* --- Color: Borders & Lines --- */
+  --p-outline: #8E9192;
+  --p-outline-variant: #3D3839;
+  --p-grid-line: #1A1A1A;
+
+  /* --- Color: Text & Foregrounds --- */
+  --p-on-background: #F2F2F2;
+  --p-on-surface: #E3E2E2;
+  --p-on-surface-variant: #C4C7C8;
+  --p-primary: #F5F5F5;
+  --p-on-primary: #0C0C0C;
+  --p-secondary: #CDC4C5;
+  --p-on-secondary: #342F30;
+  --p-code-bg: #161616;
+
+  /* --- Color: Inverse --- */
+  --p-inverse-surface: #E3E2E2;
+  --p-inverse-on-surface: #303031;
+
+  /* --- Color: Error --- */
+  --p-error: #FFB4AB;
+  --p-on-error: #690005;
+  --p-error-container: #93000A;
+
+  /* --- Typography --- */
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Code', monospace;
+
+  /* --- Spacing (4px base grid) --- */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-gutter: 16px;
+  --space-margin-mobile: 16px;
+  --space-margin-desktop: 32px;
+  --space-max-width: 1280px;
+
+  /* --- Radius --- */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* --- Shadows (Monochrome: hard-edge only) --- */
+  --shadow-card-hover: 2px 2px 0px var(--p-primary);
+
+  /* --- Transitions --- */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Apply defaults --- */
+  font-family: var(--font-sans);
+  color: var(--p-on-background);
+  background-color: var(--p-background);
+}
+
+/* ============================================
+   CSS Custom Properties — Light Mode
+   ============================================ */
+.light,
+[data-theme='light'] {
+  --p-background: #F9F9F9;
+  --p-surface: #F9F9F9;
+  --p-surface-dim: #DADADA;
+  --p-surface-bright: #F9F9F9;
+  --p-surface-container-lowest: #FFFFFF;
+  --p-surface-container-low: #F3F3F4;
+  --p-surface-container: #EEEEEE;
+  --p-surface-container-high: #E8E8E8;
+  --p-surface-container-highest: #E2E2E2;
+
+  --p-outline: #7E7576;
+  --p-outline-variant: #CFC4C5;
+  --p-grid-line: #E2E2E2;
+
+  --p-on-background: #1A1C1C;
+  --p-on-surface: #1A1C1C;
+  --p-on-surface-variant: #4C4546;
+  --p-primary: #000000;
+  --p-on-primary: #FFFFFF;
+  --p-secondary: #5E5E5E;
+  --p-on-secondary: #FFFFFF;
+  --p-code-bg: #F5F5F5;
+
+  --p-inverse-surface: #2F3131;
+  --p-inverse-on-surface: #F0F1F1;
+
+  --p-error: #BA1A1A;
+  --p-on-error: #FFFFFF;
+  --p-error-container: #FFDAD6;
+}
+
+/* ============================================
+   Typography Utility Classes
+   ============================================ */
+.text-display-xl {
+  font-family: var(--font-sans);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+@media (min-width: 768px) {
+  .text-display-xl {
+    font-size: 72px;
+  }
+}
+
+.text-headline-lg {
+  font-family: var(--font-sans);
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.text-headline-md {
+  font-family: var(--font-sans);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.text-body-lg {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.text-body-sm {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.text-label-md {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.text-label-sm {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+/* ============================================
+   Grid Background Pattern
+   ============================================ */
+.bg-grid {
+  background-image:
+    linear-gradient(var(--p-grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--p-grid-line) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* ============================================
+   Card Hover Interaction (Hard-edge shadow)
+   ============================================ */
+.card-hover {
+  transition:
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.card-hover:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.card-hover:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+/* ============================================
+   Base Reset & Defaults
+   ============================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 2px solid var(--p-primary);
+  outline-offset: 2px;
+}
