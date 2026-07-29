@@ -1,0 +1,29 @@
+---
+description: Nuxt 3, Vue 3 Composition API & TypeScript Standards
+globs: **/*.vue, **/*.ts, **/*.js
+alwaysApply: false
+---
+
+# Nuxt 3, Vue 3 & TypeScript Standards
+
+When writing Vue components and TypeScript code for `threadsos.dev`, strictly adhere to these practices:
+
+## 1. Vue 3 Composition API
+- Always use `<script setup lang="ts">`.
+- Do NOT use Options API or manual `defineComponent` wrappers unless strictly required.
+- Separate complex page state and business logic into custom composables under `app/composables/` (e.g., `useThreadGenerator()`, `useSmartSuggestions()`).
+- Event handlers: Prefix methods with `handle` (e.g., `handleGenerate()`, `handleCopy()`) and emitted events with `on` (e.g., `@click="handleCopy"`).
+
+## 2. Nuxt 3 Conventions
+- **Routing & Pages:** Keep `app/pages/` thin. Delegate UI logic to reusable components in `app/components/`.
+- **Auto-Imports:** Capitalize on Nuxt auto-imports for Vue APIs (`ref`, `computed`, `watch`, `useState`) and composables. Do NOT add unnecessary explicit imports for standard Vue/Nuxt helpers.
+- **Server API Routes:** Place all API logic inside `server/api/` (e.g., `server/api/generate.post.ts`). Never expose OpenAI API keys to the client side.
+
+## 3. Strict TypeScript
+- **No `any`:** Always define explicit interfaces/types for requests, responses, and states.
+- Store shared domain interfaces in `app/types/` or `types/` (e.g., `ThreadPost`, `FrameworkOption`, `UserTone`).
+- Handle async errors gracefully using `try/catch` and Nuxt's `createError` or custom typed error responses.
+
+## 4. State Management
+- Use Nuxt `useState()` or lightweight Pinia stores for application-wide state (e.g., active thread draft, user profile settings, generation history).
+- Use local `ref()` / `reactive()` for component-confined UI state (e.g., modal open state, dropdown open).

@@ -1,0 +1,51 @@
+---
+description: Monochrome Design System & UI/UX Guidelines
+globs: **/*.vue, **/*.css, **/*.pcss, app/**/*.vue
+alwaysApply: false
+---
+
+# Monochrome Design System Guidelines (v1.1 Geist Standard)
+
+All visual elements in `threadsos.dev` MUST strictly follow the Monochrome High-Contrast aesthetic outlined in `docs/2026-07-29/ui-ux-design-spec.md`.
+
+## 1. Color System (Strict Monochrome — No Accent Colors)
+
+### Dark Mode Palette (Default)
+- Nền ngoài cùng (`--p-background`): `#0C0C0C`
+- Surface container (`--p-surface-container`): `#1F1F1F`
+- Input / Hover state (`--p-surface-container-high`): `#262626`
+- Viền mờ mặc định (`--p-outline-variant`): `#3D3839`
+- Text chính (`--p-on-background`): `#F2F2F2` (Trắng kem)
+- Nút Primary Action (`--p-primary`): `#F5F5F5` (Nền Trắng, chữ Đen `#0C0C0C`)
+
+### Light Mode Palette
+- Nền ngoài cùng (`--p-background`): `#F9F9F9`
+- Viền (`--p-outline-variant`): `#CFC4C5`
+- Text chính (`--p-on-background`): `#1A1C1C`
+- Nút Primary Action (`--p-primary`): `#000000` (Nền Đen, chữ Trắng `#FFFFFF`)
+
+### STRICT NO-NOS:
+- ❌ NO gradients (especially purple/violet/cyan AI gradients).
+- ❌ NO generic colors (red/blue/green accents for primary UI buttons).
+- ❌ NO soft rounded pill designs everywhere — keep borders sharp (`radius-sm: 4px`, `radius-md: 6px`).
+
+## 2. Typography
+- **Primary Font:** `Geist Sans` (`font-sans`) for all headlines, body text, buttons.
+- **Monospace Font:** `JetBrains Mono` (`font-mono`) for labels, badges, character counts, framework tags, and output previews.
+
+## 3. Core UI Components
+
+### Primary Button
+- High-contrast solid background (`#F5F5F5` in Dark Mode, `#000000` in Light Mode).
+- SemiBold 14px text.
+- Micro-interaction: Hover translates `-2px, -2px` with a crisp hard shadow `box-shadow: 2px 2px 0px var(--p-primary)`. Active translates back `0, 0`.
+
+### Threads Preview Card
+- Must closely mimic the native Threads app layout:
+  - User avatar monogram/circle
+  - Username & timestamp in Mono/Sans
+  - Clean formatted thread body preserving linebreaks
+  - Bottom action bar: Heart, Reply, Repost, Share icons (thin outline icons).
+
+### Micro-interactions & Toast Notifications
+- Copy action feedback: Toast notification `[✓ Đã sao chép bài viết vào Clipboard]` in crisp monochrome black/white.

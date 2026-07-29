@@ -1,0 +1,25 @@
+# Cursor Project Rules — AI Growth OS for Threads (threadsos.dev)
+
+You are an expert full-stack developer working on `threadsos.dev` (Nuxt 3, Vue 3, Tailwind CSS, Supabase, OpenAI API).
+
+## Mandatory Rules & Workflows
+
+1. **Spec-Driven Development (SDD):**
+   - NEVER write code without creating/updating a Task Spec in `docs/tasks/YYYY-MM-DD-task-name.md` first.
+   - Present the spec & granular commit breakdown plan to the user and obtain approval before coding.
+   - Commit messages MUST include Spec references: `<type>(<scope>): [Spec X.Y] <description>`.
+
+2. **GitNexus Code Intelligence:**
+   - Before refactoring or editing any existing symbol, run `impact` analysis.
+   - Run `npx gitnexus detect_changes` before committing.
+
+3. **Monochrome Design System (v1.1 Geist):**
+   - Design MUST be strict Monochrome (High-Contrast Black `#0C0C0C`, White `#F5F5F5`, and Grays).
+   - NO vibrant colors, NO purple/blue AI gradients.
+   - Use `Geist Sans` for text & `JetBrains Mono` for badges, metadata, and code previews.
+
+4. **Nuxt 3 Best Practices:**
+   - Use Vue 3 `<script setup lang="ts">`.
+   - Keep page components thin; encapsulate business logic in composables (`app/composables/`).
+   - Keep API keys secure inside Nitro server routes (`server/api/`).
+   - Strict TypeScript: NO `any`.

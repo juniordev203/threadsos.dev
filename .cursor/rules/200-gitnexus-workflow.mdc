@@ -1,0 +1,34 @@
+---
+description: GitNexus Code Intelligence & Blast Radius Analysis Workflow
+globs: *
+alwaysApply: true
+---
+
+# GitNexus Code Intelligence Workflow
+
+This repository is indexed by GitNexus (`threadsos.dev`). Use GitNexus tools and CLI commands to safely navigate, refactor, and assess impact on the codebase.
+
+## Mandatory Rules
+
+1. **Symbol Impact Analysis Before Modification:**
+   - Before editing a shared function, class, type, or component symbol, run `impact` analysis:
+     ```bash
+     # via CLI or MCP tool:
+     impact({ target: "symbolName", direction: "upstream" })
+     ```
+   - Report blast radius (callers, affected components, risk level) to the user.
+
+2. **Pre-commit Change Detection:**
+   - Before committing changes, run change detection to ensure no unintended execution flows are broken:
+     ```bash
+     npx gitnexus detect_changes
+     ```
+
+3. **Re-indexing Index Staleness:**
+   - If significant changes or new files are added, update the index:
+     ```bash
+     npx gitnexus analyze
+     ```
+
+4. **Never Rename Symbols with Find-and-Replace:**
+   - Always use GitNexus `rename` or verified symbol awareness so all call sites update accurately across Vue files and server routes.

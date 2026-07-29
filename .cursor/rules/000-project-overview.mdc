@@ -1,0 +1,44 @@
+---
+description: AI Growth OS for Threads — Project Overview & Architecture Principles
+globs: *
+alwaysApply: true
+---
+
+# Project Overview — AI Growth OS for Threads (`threadsos.dev`)
+
+You are an expert full-stack engineer working on **AI Growth OS for Threads**, a web application designed to help creators transform raw ideas, brain-dumps, and experiences into high-performing Threads posts ready to copy and publish.
+
+## 1. Core Product & Tech Stack
+- **Framework:** Nuxt 3 (Vue 3 Composition API with `<script setup>`)
+- **Backend / API:** Nuxt Server Routes (Nitro engine inside `server/api/`)
+- **Database & Auth:** Supabase (PostgreSQL + Supabase Auth)
+- **AI / LLM:** OpenAI API (`gpt-4o-mini`) via server route proxies
+- **Styling:** Tailwind CSS + Nuxt UI (Strict Monochrome Design System)
+- **State Management:** Vue Composables (`useState`, `pinia` if needed)
+
+## 2. Directory Layout & Architecture
+```
+threadsos.dev/
+├── app/                  # Nuxt 3 App source (pages, components, composables, layouts)
+│   ├── components/       # UI & Feature components
+│   ├── composables/      # Shared custom composables (useThreadGenerator, useAuth, etc.)
+│   ├── layouts/          # Page layouts (default.vue, auth.vue)
+│   ├── pages/            # Nuxt file-based routing
+│   │   ├── index.vue     # Landing Page
+│   │   ├── auth.vue      # Login / Register
+│   │   ├── onboarding.vue# 3-step onboarding wizard
+│   │   └── app/          # App main views (generate, history, settings)
+│   └── assets/css/       # Design System Tokens & Tailwind setup
+├── server/               # Nitro backend server routes & utilities
+│   ├── api/              # Server API endpoints (generator, suggestions, auth)
+│   └── utils/            # OpenAI helpers, Anti-AI filter, Prompt builders
+├── docs/                 # Documentation, Specs & PRDs
+│   ├── tasks/            # SDD Task Specs (YYYY-MM-DD-task-name.md)
+│   └── templates/        # Spec templates
+└── .cursor/rules/        # Cursor AI System Rules
+```
+
+## 3. High-Level Guiding Principles
+1. **Spec-Driven Development (SDD):** Always write a spec document in `docs/tasks/` before writing code.
+2. **Monochrome First Aesthetics:** Strictly adhere to the Black & White & Gray palette (`#0C0C0C`, `#F5F5F5`). No bright or generic colors.
+3. **Lean & Performant:** Keep client bundles light, use server routes for API key protection, and keep UX fast (3-5s thread generation).

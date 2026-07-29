@@ -1,0 +1,37 @@
+---
+description: Spec-Driven Development (SDD) Workflow & Commit Rules
+globs: *
+alwaysApply: true
+---
+
+# Spec-Driven Development (SDD) Workflow
+
+For **EVERY** feature, bugfix, refactor, or architectural change in this repository, you **MUST** strictly follow Spec-Driven Development.
+
+## Rule: NO CODE BEFORE SPEC
+Never write or modify codebase files before documenting the task specification in `docs/tasks/` and securing user approval.
+
+## SDD Workflow Steps
+
+### Step 1: Create Task Spec Document
+Create a new file under `docs/tasks/<YYYY-MM-DD>-<task-name>.md` using the template at `docs/templates/task-spec-template.md`.
+
+The Spec MUST include:
+1. **Goal & Scope:** Clear problem statement, In-Scope, and Out-of-Scope items.
+2. **Technical Design:** Files created/modified/deleted (`[NEW]`, `[MODIFY]`, `[DELETE]`), state changes, API contracts.
+3. **Granular Commit Breakdown Plan:** Sequenced list of small commits.
+   - Commit message format: `<type>(<scope>): [Spec X.Y] <description>`
+   - Detailed target files & purpose for each commit.
+4. **Verification Plan:** Build checks (`npm run build`), typechecks (`npx nuxi typecheck`), and manual UI test steps.
+
+### Step 2: Present & Obtain User Approval
+Present the Task Spec document to the user and wait for explicit confirmation before writing any code.
+
+### Step 3: Implement with Commit Tracing
+- Implement changes commit-by-commit as planned in the Spec.
+- Always include the Spec reference `[Spec X.Y]` in the commit message.
+- Run GitNexus symbol impact check before refactoring existing code symbols.
+
+### Step 4: Verification & Spec Update
+- Execute all verification steps.
+- Mark completed items in the Task Spec document and record completion status.
