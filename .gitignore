@@ -29,3 +29,7 @@ storybook-static
 
 # GitNexus
 .gitnexus
+
+# Cursor MCP config
+.cursor/mcp.json
+
