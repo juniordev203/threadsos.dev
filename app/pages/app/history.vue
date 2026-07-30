@@ -11,17 +11,42 @@ const mockThreads = [
   { id: '3', rawInput: 'Quan điểm về hustle culture', framework: 'unpopular_opinion', generatedText: 'Unpopular opinion: Hustle culture không giúp bạn thành công.\n\nNó chỉ giúp bạn kiệt sức nhanh hơn.\n\nTôi đã từng làm việc 14 tiếng/ngày trong 2 năm. Kết quả? Burnout nặng, mất motivation hoàn toàn.\n\nBây giờ tôi làm 6 tiếng/ngày tập trung cao độ. Output tốt hơn gấp đôi.\n\nBí quyết không phải làm nhiều hơn. Mà là làm đúng việc.', createdAt: '1 ngày trước' },
 ]
 
-const filteredThreads = computed(() => {
-  if (activeFilter.value === 'all') return mockThreads
-  return mockThreads.filter(t => t.framework === activeFilter.value)
+const { getThreadHistory } = useApi()
+const apiThreads = ref<any[]>([])
+
+onMounted(async () => {
+  try {
+    const data = await getThreadHistory('user_demo_123')
+    if (data && data.length > 0) {
+      apiThreads.value = data.map(t => ({
+        id: t.id,
+        rawInput: t.raw_input,
+        framework: t.framework || 'unpopular_opinion',
+        generatedText: t.generated_text,
+        createdAt: new Date(t.created_at).toLocaleDateString('vi-VN'),
+      }))
+    }
+  } catch (err) {
+    console.warn('[History Page] API fetch fallback:', err)
+  }
 })
 
-function handleReload(thread: (typeof mockThreads)[0]) {
+const displayThreads = computed(() => {
+  return apiThreads.value.length > 0 ? apiThreads.value : mockThreads
+})
+
+const filteredThreads = computed(() => {
+  if (activeFilter.value === 'all') return displayThreads.value
+  return displayThreads.value.filter(t => t.framework === activeFilter.value)
+})
+
+function handleReload(thread: any) {
   navigateTo({
     path: '/app/generate',
     query: { id: thread.id }
   })
 }
+
 </script>
 
 <template>

@@ -10,15 +10,24 @@ const generatedContent = ref('')
 const isGenerating = ref(false)
 const selectedFramework = ref('unpopular_opinion')
 
-const handleGenerate = () => {
+const { generateThread } = useApi()
+
+const handleGenerate = async () => {
   if (!inputText.value.trim()) return
   isGenerating.value = true
-  // Mock generation for now
-  setTimeout(() => {
-    generatedContent.value = `Hook đầu tiên thu hút:\n\n${inputText.value}\n\nĐây là nội dung được AI sinh ra dựa trên ý tưởng của bạn. Bài viết được tối ưu theo cấu trúc Threads: Hook → Body → CTA.\n\n💡 Bạn nghĩ sao? Để lại comment nhé!`
+  try {
+    const thread = await generateThread({
+      raw_input: inputText.value,
+      framework: selectedFramework.value,
+    })
+    generatedContent.value = thread.generated_text
+  } catch (err) {
+    console.error('[Generate Page] Error:', err)
+  } finally {
     isGenerating.value = false
-  }, 2000)
+  }
 }
+
 </script>
 
 <template>

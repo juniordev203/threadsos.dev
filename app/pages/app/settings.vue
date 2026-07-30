@@ -58,19 +58,43 @@ function setTheme(theme: 'dark' | 'light') {
   }
 }
 
-onMounted(() => {
+const { getUserProfile, updateUserProfile } = useApi()
+
+onMounted(async () => {
   if (import.meta.client) {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light' || document.documentElement.classList.contains('light')
     currentTheme.value = isLight ? 'light' : 'dark'
   }
+  try {
+    const profile = await getUserProfile('user_demo_123')
+    if (profile) {
+      if (profile.niche) selectedNiche.value = profile.niche
+      if (profile.bio) bio.value = profile.bio
+      if (profile.tone) selectedTone.value = profile.tone
+    }
+  } catch (err) {
+    console.warn('[Settings Page] Fetch profile fallback:', err)
+  }
 })
 
-function handleSave() {
+async function handleSave() {
+  try {
+    await updateUserProfile({
+      clerk_user_id: 'user_demo_123',
+      niche: selectedNiche.value,
+      bio: bio.value,
+      tone: selectedTone.value,
+    })
+  } catch (err) {
+    console.warn('[Settings Page] Save profile fallback:', err)
+  }
+
   showSaveSuccess.value = true
   setTimeout(() => {
     showSaveSuccess.value = false
   }, 2500)
 }
+
 </script>
 
 <template>

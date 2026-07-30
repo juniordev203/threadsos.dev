@@ -47,15 +47,32 @@ const isNextDisabled = computed(() => {
   return false
 })
 
-function handleNext() {
+const { saveUserProfile } = useApi()
+const isSaving = ref(false)
+
+async function handleNext() {
   if (isNextDisabled.value) return
 
   if (currentStep.value < 3) {
     currentStep.value++
   } else {
-    navigateTo('/app/generate')
+    isSaving.value = true
+    try {
+      await saveUserProfile({
+        clerk_user_id: 'user_demo_123', // Will be replaced by actual Clerk user ID
+        niche: niche.value as any,
+        bio: bio.value,
+        tone: tone.value as any,
+      })
+    } catch (err) {
+      console.warn('[Onboarding] Profile save fallback:', err)
+    } finally {
+      isSaving.value = false
+      navigateTo('/app/generate')
+    }
   }
 }
+
 
 function handleBack() {
   if (currentStep.value > 1) {
