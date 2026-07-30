@@ -11,6 +11,17 @@ const selectedTone = ref<Tone>('practical')
 const currentTheme = ref<'dark' | 'light'>('dark')
 const showSaveSuccess = ref(false)
 
+const { signOut } = useAuth()
+
+async function handleLogout() {
+  try {
+    await signOut.value()
+    navigateTo('/auth')
+  } catch (err) {
+    console.error('Logout failed:', err)
+  }
+}
+
 const nicheOptions: { slug: Niche; label: string }[] = [
   { slug: 'technology', label: 'Technology' },
   { slug: 'marketing', label: 'Marketing' },
@@ -249,6 +260,21 @@ async function handleSave() {
       >
         <Icon name="lucide:check" class="w-4 h-4" /> Đã lưu thay đổi cài đặt thành công!
       </p>
+
+      <!-- Section 5: Account -->
+      <div class="space-y-3 pt-6 mt-8 border-t" style="border-color: var(--p-outline-variant);">
+        <label class="block text-label-md text-red-500">
+          Tài khoản
+        </label>
+        <button
+          type="button"
+          class="w-full font-sans text-sm font-semibold py-3 px-6 cursor-pointer transition-all border border-red-500 text-red-500 hover:bg-red-500/10 select-none flex items-center justify-center gap-2"
+          :style="{ borderRadius: 'var(--radius-md)' }"
+          @click="handleLogout"
+        >
+          <Icon name="lucide:log-out" class="w-4 h-4" /> Đăng xuất
+        </button>
+      </div>
     </form>
   </div>
 </template>
