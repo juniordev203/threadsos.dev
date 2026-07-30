@@ -68,24 +68,27 @@ QUY TẮC ANTI-AI HUMANIZER (BẮT BUỘC):
   if (body.user_id) {
     try {
       const supabase = useSupabaseServer()
-      const { data } = await supabase
-        .from('generated_threads')
-        .insert({
-          user_id: body.user_id,
-          raw_input: rawInput,
-          framework,
-          generated_text: generatedText,
-        })
-        .select()
-        .single()
+      if (supabase) {
+        const { data } = await supabase
+          .from('generated_threads')
+          .insert({
+            user_id: body.user_id,
+            raw_input: rawInput,
+            framework,
+            generated_text: generatedText,
+          })
+          .select()
+          .single()
 
-      if (data) {
-        savedThread = data as GeneratedThread
+        if (data) {
+          savedThread = data as GeneratedThread
+        }
       }
     } catch {
       // Ignore DB save error on fallback
     }
   }
+
 
   return {
     thread: savedThread || {

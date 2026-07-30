@@ -11,8 +11,11 @@ export default defineEventHandler(async (event) => {
 
   try {
     const supabase = useSupabaseServer()
+    if (!supabase) return { threads: [] }
+
     let req = supabase
       .from('generated_threads')
+
       .select('*')
       .eq('user_id', userId)
       .order('created_at', { ascending: false })

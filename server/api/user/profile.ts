@@ -4,6 +4,25 @@ export default defineEventHandler(async (event) => {
   const method = getMethod(event)
   const supabase = useSupabaseServer()
 
+  if (!supabase) {
+    // Return dummy fallback profile if Supabase is unconfigured
+    return {
+      profile: {
+        id: 'demo-id',
+        clerk_user_id: 'user_demo_123',
+        display_name: 'Demo User',
+        avatar_url: null,
+        niche: 'technology',
+        bio: 'Senior Frontend Engineer & Content Creator',
+        tone: 'practical',
+        onboarding_done: true,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+      },
+    }
+  }
+
+
   // --- GET: Fetch profile by clerk_user_id ---
   if (method === 'GET') {
     const query = getQuery(event)

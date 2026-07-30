@@ -13,6 +13,14 @@ export default defineEventHandler(async (event) => {
 
   const supabase = useSupabaseServer()
 
+  if (!supabase) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Thread database not configured',
+    })
+  }
+
+
   // --- GET: Fetch single thread ---
   if (method === 'GET') {
     const { data, error } = await supabase
