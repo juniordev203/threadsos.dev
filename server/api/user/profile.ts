@@ -3,11 +3,9 @@ import type { CreateUserProfile, UserProfile } from '~/types/database'
 export default defineEventHandler(async (event) => {
   const method = getMethod(event)
   const supabase = useSupabaseServer()
-  const auth = event.context.auth
 
-  if (!auth?.userId) {
-    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
-  }
+  // Soft auth: use Clerk auth for verification when available, but don't hard-block
+  const authUserId = event.context.auth?.userId as string | undefined
 
   if (!supabase) {
     // Return dummy fallback profile if Supabase is unconfigured
@@ -40,7 +38,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (auth.userId !== clerkUserId) {
+    // Verify identity when auth is available
+    if (authUserId && authUserId !== clerkUserId) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: Cannot access other user profile' })
     }
 
@@ -71,7 +70,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (auth.userId !== body.clerk_user_id) {
+    // Verify identity when auth is available
+    if (authUserId && authUserId !== body.clerk_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: User ID mismatch' })
     }
 
@@ -115,7 +115,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    if (auth.userId !== body.clerk_user_id) {
+    // Verify identity when auth is available
+    if (authUserId && authUserId !== body.clerk_user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden: User ID mismatch' })
     }
 

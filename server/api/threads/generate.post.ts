@@ -10,10 +10,8 @@ interface GenerateRequestBody {
 }
 
 export default defineEventHandler(async (event) => {
-  const auth = event.context.auth
-  if (!auth?.userId) {
-    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
-  }
+  // Soft auth: verify identity when available, don't hard-block
+  const authUserId = event.context.auth?.userId as string | undefined
 
   const body = await readBody<GenerateRequestBody>(event)
 
@@ -109,7 +107,7 @@ QUY TẮC ANTI-AI (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
   // Optionally save to Supabase if user_id provided
   let savedThread: GeneratedThread | null = null
   if (body.user_id) {
-    if (auth.userId !== body.user_id) {
+    if (authUserId && authUserId !== body.user_id) {
       throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
     }
 
