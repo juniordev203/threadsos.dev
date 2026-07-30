@@ -72,6 +72,10 @@ export interface Framework {
   name_vi: string
   name_en: string
   description: string | null
+  icon: string
+  color: string
+  structure_preview: string
+  example_output: string
   brain_dump_prompts: string[]
   sort_order: number
   is_active: boolean

@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import ThreadsPostCard from './ThreadsPostCard.vue'
+import type { Framework } from '~/types/database'
 
 const props = withDefaults(defineProps<{
   content?: string
   isLoading?: boolean
+  selectedFramework?: Framework
 }>(), {
   content: '',
-  isLoading: false
+  isLoading: false,
+  selectedFramework: undefined
 })
 
 const emit = defineEmits<{
@@ -53,7 +56,31 @@ function handleEdit() {
       </p>
     </div>
 
-    <!-- State 2: Empty State -->
+    <!-- State 2: Framework Example State (When no content but framework selected) -->
+    <div
+      v-else-if="!content && selectedFramework?.example_output"
+      class="flex-1 flex flex-col gap-4 animate-in fade-in duration-300"
+    >
+      <div class="font-mono text-xs tracking-wider text-[var(--p-on-surface-variant)] uppercase flex items-center justify-between">
+        <span class="flex items-center gap-1.5">
+          <Icon name="lucide:eye" class="w-4 h-4" /> 
+          VÍ DỤ BÀI VIẾT: {{ selectedFramework.name_vi }}
+        </span>
+      </div>
+      
+      <!-- Show example with opacity to differentiate from real generated content -->
+      <div class="opacity-60 grayscale-[20%] pointer-events-none select-none">
+        <ThreadsPostCard :content="selectedFramework.example_output" />
+      </div>
+      
+      <div class="mt-auto pt-4 text-center">
+        <p class="text-sm font-sans text-[var(--p-on-surface-variant)]">
+          Hoàn thành ý tưởng bên trái để tạo bài viết của riêng bạn ✨
+        </p>
+      </div>
+    </div>
+
+    <!-- State 3: Empty State (No content, no framework example) -->
     <div
       v-else-if="!content"
       class="flex-1 flex flex-col items-center justify-center p-8 text-center gap-3 border border-dashed border-[var(--p-outline-variant)] rounded-[var(--radius-lg)]"
@@ -65,12 +92,15 @@ function handleEdit() {
         <p class="text-sm font-sans text-[var(--p-on-surface-variant)]">
           Bài viết của bạn sẽ xuất hiện ở đây
         </p>
-
       </div>
     </div>
 
-    <!-- State 3: Content Preview State -->
-    <div v-else class="flex flex-col justify-between h-full gap-6">
+    <!-- State 4: Content Preview State -->
+    <div v-else class="flex flex-col justify-between h-full gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <div class="font-mono text-xs tracking-wider text-[var(--p-primary)] uppercase font-semibold flex items-center gap-1.5">
+        <Icon name="lucide:check-circle-2" class="w-4 h-4" /> 
+        ĐÃ TẠO XONG
+      </div>
       <ThreadsPostCard :content="content" />
 
       <!-- Action Toolbar -->
