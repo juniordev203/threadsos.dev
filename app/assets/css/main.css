@@ -13,39 +13,39 @@
    ============================================ */
 :root {
   /* --- Color: Background & Surface --- */
-  --p-background: #0C0C0C;
-  --p-surface: #0C0C0C;
-  --p-surface-dim: #121414;
-  --p-surface-bright: #383939;
-  --p-surface-container-lowest: #0D0E0F;
-  --p-surface-container-low: #1B1C1C;
-  --p-surface-container: #1F2020;
-  --p-surface-container-high: #292A2A;
-  --p-surface-container-highest: #343535;
+  --p-background: #FFFFFF;
+  --p-surface: #FFFFFF;
+  --p-surface-dim: #E5E5E5;
+  --p-surface-bright: #FFFFFF;
+  --p-surface-container-lowest: #FFFFFF;
+  --p-surface-container-low: #F8F9FA;
+  --p-surface-container: #F1F3F5;
+  --p-surface-container-high: #E9ECEF;
+  --p-surface-container-highest: #DEE2E6;
 
   /* --- Color: Borders & Lines --- */
-  --p-outline: #8E9192;
-  --p-outline-variant: #3D3839;
-  --p-grid-line: #1A1A1A;
+  --p-outline: #7E7576;
+  --p-outline-variant: #E2E8F0;
+  --p-grid-line: transparent;
 
   /* --- Color: Text & Foregrounds --- */
-  --p-on-background: #F2F2F2;
-  --p-on-surface: #E3E2E2;
-  --p-on-surface-variant: #C4C7C8;
-  --p-primary: #F5F5F5;
-  --p-on-primary: #0C0C0C;
-  --p-secondary: #CDC4C5;
-  --p-on-secondary: #342F30;
-  --p-code-bg: #161616;
+  --p-on-background: #0F172A;
+  --p-on-surface: #0F172A;
+  --p-on-surface-variant: #475569;
+  --p-primary: #000000;
+  --p-on-primary: #FFFFFF;
+  --p-secondary: #475569;
+  --p-on-secondary: #FFFFFF;
+  --p-code-bg: #F8F9FA;
 
   /* --- Color: Inverse --- */
-  --p-inverse-surface: #E3E2E2;
-  --p-inverse-on-surface: #303031;
+  --p-inverse-surface: #1E293B;
+  --p-inverse-on-surface: #F8FAFC;
 
   /* --- Color: Error --- */
-  --p-error: #FFB4AB;
-  --p-on-error: #690005;
-  --p-error-container: #93000A;
+  --p-error: #DC2626;
+  --p-on-error: #FFFFFF;
+  --p-error-container: #FEE2E2;
 
   /* --- Typography --- */
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
@@ -83,39 +83,39 @@
 }
 
 /* ============================================
-   CSS Custom Properties — Light Mode
+   CSS Custom Properties — Dark Mode
    ============================================ */
-.light,
-[data-theme='light'] {
-  --p-background: #F9F9F9;
-  --p-surface: #F9F9F9;
-  --p-surface-dim: #DADADA;
-  --p-surface-bright: #F9F9F9;
-  --p-surface-container-lowest: #FFFFFF;
-  --p-surface-container-low: #F3F3F4;
-  --p-surface-container: #EEEEEE;
-  --p-surface-container-high: #E8E8E8;
-  --p-surface-container-highest: #E2E2E2;
+.dark,
+[data-theme='dark'] {
+  --p-background: #0C0C0C;
+  --p-surface: #0C0C0C;
+  --p-surface-dim: #121414;
+  --p-surface-bright: #383939;
+  --p-surface-container-lowest: #0D0E0F;
+  --p-surface-container-low: #1B1C1C;
+  --p-surface-container: #1F2020;
+  --p-surface-container-high: #292A2A;
+  --p-surface-container-highest: #343535;
 
-  --p-outline: #7E7576;
-  --p-outline-variant: #CFC4C5;
-  --p-grid-line: #E2E2E2;
+  --p-outline: #8E9192;
+  --p-outline-variant: #3D3839;
+  --p-grid-line: transparent;
 
-  --p-on-background: #1A1C1C;
-  --p-on-surface: #1A1C1C;
-  --p-on-surface-variant: #4C4546;
-  --p-primary: #000000;
-  --p-on-primary: #FFFFFF;
-  --p-secondary: #5E5E5E;
-  --p-on-secondary: #FFFFFF;
-  --p-code-bg: #F5F5F5;
+  --p-on-background: #F2F2F2;
+  --p-on-surface: #E3E2E2;
+  --p-on-surface-variant: #C4C7C8;
+  --p-primary: #F5F5F5;
+  --p-on-primary: #0C0C0C;
+  --p-secondary: #CDC4C5;
+  --p-on-secondary: #342F30;
+  --p-code-bg: #161616;
 
-  --p-inverse-surface: #2F3131;
-  --p-inverse-on-surface: #F0F1F1;
+  --p-inverse-surface: #E3E2E2;
+  --p-inverse-on-surface: #303031;
 
-  --p-error: #BA1A1A;
-  --p-on-error: #FFFFFF;
-  --p-error-container: #FFDAD6;
+  --p-error: #FFB4AB;
+  --p-on-error: #690005;
+  --p-error-container: #93000A;
 }
 
 /* ============================================
@@ -181,13 +181,10 @@
 }
 
 /* ============================================
-   Grid Background Pattern
+   Grid Background Pattern (Disabled)
    ============================================ */
 .bg-grid {
-  background-image:
-    linear-gradient(var(--p-grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--p-grid-line) 1px, transparent 1px);
-  background-size: 24px 24px;
+  background-color: var(--p-background);
 }
 
 /* ============================================
