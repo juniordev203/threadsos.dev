@@ -3,6 +3,11 @@ import type { CreateUserProfile, UserProfile } from '~/types/database'
 export default defineEventHandler(async (event) => {
   const method = getMethod(event)
   const supabase = useSupabaseServer()
+  const auth = event.context.auth
+
+  if (!auth?.userId) {
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+  }
 
   if (!supabase) {
     // Return dummy fallback profile if Supabase is unconfigured
@@ -35,6 +40,10 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    if (auth.userId !== clerkUserId) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden: Cannot access other user profile' })
+    }
+
     const { data, error } = await supabase
       .from('user_profiles')
       .select('*')
@@ -62,6 +71,10 @@ export default defineEventHandler(async (event) => {
       })
     }
 
+    if (auth.userId !== body.clerk_user_id) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden: User ID mismatch' })
+    }
+
     const { data, error } = await supabase
       .from('user_profiles')
       .upsert(
@@ -81,22 +94,11 @@ export default defineEventHandler(async (event) => {
       .single()
 
     if (error) {
-      console.warn('[Profile API POST] Supabase Error:', error.message)
-      // Graceful fallback for RLS or other DB errors
-      return {
-        profile: {
-          id: 'temp-' + Date.now(),
-          clerk_user_id: body.clerk_user_id,
-          display_name: body.display_name || null,
-          avatar_url: body.avatar_url || null,
-          niche: body.niche,
-          bio: body.bio || null,
-          tone: body.tone || 'practical',
-          onboarding_done: true,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        } as UserProfile
-      }
+      console.error('[Profile API POST] Supabase Error:', error)
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Database Error: ${error.message}. Please ensure SUPABASE_SERVICE_ROLE_KEY is configured in Vercel to bypass RLS.`,
+      })
     }
 
     return { profile: data as UserProfile }
@@ -111,6 +113,10 @@ export default defineEventHandler(async (event) => {
         statusCode: 400,
         statusMessage: 'Missing clerk_user_id',
       })
+    }
+
+    if (auth.userId !== body.clerk_user_id) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden: User ID mismatch' })
     }
 
     const { data, error } = await supabase
@@ -128,22 +134,11 @@ export default defineEventHandler(async (event) => {
       .single()
 
     if (error) {
-      console.warn('[Profile API PUT] Supabase Error:', error.message)
-      // Graceful fallback for RLS or other DB errors
-      return {
-        profile: {
-          id: 'temp-' + Date.now(),
-          clerk_user_id: body.clerk_user_id,
-          display_name: body.display_name || null,
-          avatar_url: body.avatar_url || null,
-          niche: body.niche || 'technology',
-          bio: body.bio || null,
-          tone: body.tone || 'practical',
-          onboarding_done: true,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        } as UserProfile
-      }
+      console.error('[Profile API PUT] Supabase Error:', error)
+      throw createError({
+        statusCode: 500,
+        statusMessage: `Database Error: ${error.message}. Please ensure SUPABASE_SERVICE_ROLE_KEY is configured in Vercel to bypass RLS.`,
+      })
     }
 
     return { profile: data as UserProfile }

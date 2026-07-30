@@ -10,6 +10,11 @@ interface GenerateRequestBody {
 }
 
 export default defineEventHandler(async (event) => {
+  const auth = event.context.auth
+  if (!auth?.userId) {
+    throw createError({ statusCode: 401, statusMessage: 'Unauthorized' })
+  }
+
   const body = await readBody<GenerateRequestBody>(event)
 
   if (!body || !body.raw_input?.trim()) {
@@ -104,26 +109,34 @@ QUY TẮC ANTI-AI (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
   // Optionally save to Supabase if user_id provided
   let savedThread: GeneratedThread | null = null
   if (body.user_id) {
-    try {
-      const supabase = useSupabaseServer()
-      if (supabase) {
-        const { data } = await supabase
-          .from('generated_threads')
-          .insert({
-            user_id: body.user_id,
-            raw_input: rawInput,
-            framework,
-            generated_text: generatedText,
-          })
-          .select()
-          .single()
+    if (auth.userId !== body.user_id) {
+      throw createError({ statusCode: 403, statusMessage: 'Forbidden' })
+    }
 
-        if (data) {
-          savedThread = data as GeneratedThread
-        }
+    const supabase = useSupabaseServer()
+    if (supabase) {
+      const { data, error } = await supabase
+        .from('generated_threads')
+        .insert({
+          user_id: body.user_id,
+          raw_input: rawInput,
+          framework,
+          generated_text: generatedText,
+        })
+        .select()
+        .single()
+
+      if (error) {
+        console.error('[Generate Thread API] Supabase Error:', error)
+        throw createError({
+          statusCode: 500,
+          statusMessage: `Database Error: ${error.message}. Please configure SUPABASE_SERVICE_ROLE_KEY.`,
+        })
       }
-    } catch {
-      // Ignore DB save error on fallback
+
+      if (data) {
+        savedThread = data as GeneratedThread
+      }
     }
   }
 
