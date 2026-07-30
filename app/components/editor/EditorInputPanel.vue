@@ -113,8 +113,8 @@ function handleGenerate() {
 
     <!-- Smart Suggestions Placeholder -->
     <div class="flex flex-col gap-3">
-      <div class="font-mono text-xs tracking-wider text-[var(--p-on-surface-variant)] uppercase">
-        💡 CÂU HỎI KÍCH THÍCH Ý TƯỞNG
+      <div class="font-mono text-xs tracking-wider text-[var(--p-on-surface-variant)] uppercase flex items-center gap-1">
+        <Icon name="lucide:lightbulb" class="w-4 h-4" /> CÂU HỎI KÍCH THÍCH Ý TƯỞNG
       </div>
       <div class="flex flex-col gap-2.5">
         <div
@@ -140,7 +140,7 @@ function handleGenerate() {
       class="w-full h-[48px] bg-[var(--p-primary)] text-[var(--p-on-primary)] font-semibold text-base rounded-[var(--radius-md)] card-hover flex items-center justify-center gap-2 cursor-pointer transition-colors mt-2"
       @click="handleGenerate"
     >
-      Generate Thread ⚡
+      Generate Thread <Icon name="lucide:zap" class="w-5 h-5" />
     </button>
   </div>
 </template>

@@ -56,8 +56,8 @@ function selectTone(value: string) {
       :class="{ 'is-selected': props.modelValue === option.value }"
       @click="selectTone(option.value)"
     >
-      <div v-if="props.modelValue === option.value" class="checkmark absolute top-4 right-4 text-sm font-bold">
-        ✓
+      <div v-if="props.modelValue === option.value" class="checkmark absolute top-4 right-4">
+        <Icon name="lucide:check" class="w-5 h-5 font-bold" />
       </div>
       <h3 class="text-base font-semibold mb-1" style="color: var(--p-on-surface);">
         {{ option.title }}

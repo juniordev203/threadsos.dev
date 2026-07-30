@@ -1,17 +1,17 @@
 <script setup lang="ts">
 const features = [
   {
-    icon: '◇',
+    icon: 'lucide:sparkles',
     title: 'Gợi ý Thông minh',
     description: '7 frameworks đã chứng minh hiệu quả trên Threads, kết hợp câu hỏi kích hoạt ý tưởng.',
   },
   {
-    icon: '⚡',
+    icon: 'lucide:zap',
     title: 'Sinh bài Tự động',
     description: 'AI biến ý tưởng thô thành bài Threads hoàn chỉnh với Hook, Body, CTA.',
   },
   {
-    icon: '◎',
+    icon: 'lucide:eye',
     title: 'Preview Chân thực',
     description: 'Xem trước bài viết đúng giao diện Threads. Copy và đăng ngay.',
   },
@@ -34,7 +34,9 @@ const features = [
           border-radius: var(--radius-lg);
         "
       >
-        <div class="text-headline-lg mb-4">{{ feature.icon }}</div>
+        <div class="text-headline-lg mb-4">
+          <Icon :name="feature.icon" class="w-8 h-8" />
+        </div>
         <h3 class="text-headline-md mb-2" style="color: var(--p-on-background);">
           {{ feature.title }}
         </h3>

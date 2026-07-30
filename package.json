@@ -12,6 +12,7 @@
   "dependencies": {
     "@clerk/nuxt": "^2.6.23",
     "@nuxt/eslint": "1.16.0",
+    "@nuxt/icon": "2.4.1",
     "@nuxt/image": "2.0.0",
     "@nuxt/ui": "4.10.0",
     "@nuxtjs/eslint-module": "4.1.0",

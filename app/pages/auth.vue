@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 useSeoMeta({ title: 'Đăng nhập — AI Growth OS' })
 
+const { isLoaded, signIn } = useSignIn()
 const isGoogleLoading = ref(false)
 
 async function handleGoogleSignIn() {
@@ -11,10 +12,8 @@ async function handleGoogleSignIn() {
 
   try {
     // Try Clerk SSO if Clerk is configured
-    // @ts-ignore
-    const clerk = useClerk?.()
-    if (clerk && clerk.client) {
-      await clerk.client.signIn.authenticateWithRedirect({
+    if (isLoaded.value && signIn.value) {
+      await signIn.value.authenticateWithRedirect({
         strategy: 'oauth_google',
         redirectUrl: '/sso-callback',
         redirectUrlComplete: '/onboarding',
@@ -22,7 +21,7 @@ async function handleGoogleSignIn() {
       return
     }
   } catch (err) {
-    console.warn('[Auth] Clerk SSO redirect fallback:', err)
+    console.warn('[Auth] Clerk SSO redirect error:', err)
   }
 
   // Fallback redirect to onboarding for preview/development

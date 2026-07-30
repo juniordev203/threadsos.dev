@@ -83,7 +83,7 @@ function handleReload() {
     <div class="flex items-center gap-2 mt-4">
       <button
         type="button"
-        class="font-mono text-xs px-3 py-1.5 border cursor-pointer transition-colors select-none"
+        class="font-mono text-xs px-3 py-1.5 border cursor-pointer transition-colors select-none flex items-center justify-center gap-1.5"
         :style="{
           borderColor: 'var(--p-outline-variant)',
           borderRadius: 'var(--radius-md)',
@@ -92,7 +92,8 @@ function handleReload() {
         }"
         @click="handleCopy"
       >
-        {{ isCopied ? '✓ Đã copy' : 'Copy' }}
+        <Icon :name="isCopied ? 'lucide:check' : 'lucide:copy'" class="w-3.5 h-3.5" />
+        {{ isCopied ? 'Đã copy' : 'Copy' }}
       </button>
 
       <button

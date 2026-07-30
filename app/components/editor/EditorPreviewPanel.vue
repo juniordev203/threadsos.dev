@@ -59,7 +59,7 @@ function handleEdit() {
       class="flex-1 flex flex-col items-center justify-center p-8 text-center gap-3 border border-dashed border-[var(--p-outline-variant)] rounded-[var(--radius-lg)]"
     >
       <div class="text-4xl text-[var(--p-outline)] select-none">
-        ◇
+        <Icon name="lucide:sparkles" class="w-10 h-10" />
       </div>
       <div class="flex flex-col gap-1">
         <p class="text-sm font-sans text-[var(--p-on-surface-variant)]">
@@ -81,7 +81,8 @@ function handleEdit() {
           class="flex-1 h-10 px-4 bg-[var(--p-primary)] text-[var(--p-on-primary)] font-medium text-sm rounded-[var(--radius-md)] card-hover flex items-center justify-center gap-2 cursor-pointer transition-colors"
           @click="handleCopy"
         >
-          <span>{{ isCopied ? '✓ Đã copy' : '📋 Copy' }}</span>
+          <Icon :name="isCopied ? 'lucide:check' : 'lucide:copy'" class="w-4 h-4" />
+          <span>{{ isCopied ? 'Đã copy' : 'Copy' }}</span>
         </button>
 
         <!-- Viết lại Button (Secondary) -->
@@ -90,7 +91,8 @@ function handleEdit() {
           class="h-10 px-4 bg-transparent border border-[var(--p-outline-variant)] text-[var(--p-on-surface)] hover:bg-[var(--p-surface-container-high)] hover:border-[var(--p-outline)] font-medium text-sm rounded-[var(--radius-md)] flex items-center justify-center gap-2 cursor-pointer transition-colors"
           @click="handleRegenerate"
         >
-          <span>🔄 Viết lại</span>
+          <Icon name="lucide:refresh-cw" class="w-4 h-4" />
+          <span>Viết lại</span>
         </button>
 
         <!-- Chỉnh sửa Button (Ghost) -->
@@ -99,7 +101,8 @@ function handleEdit() {
           class="h-10 px-4 bg-transparent text-[var(--p-secondary)] hover:text-[var(--p-on-surface)] hover:bg-[var(--p-surface-container)] font-medium text-sm rounded-[var(--radius-md)] flex items-center justify-center gap-2 cursor-pointer transition-colors"
           @click="handleEdit"
         >
-          <span>✏️ Chỉnh sửa</span>
+          <Icon name="lucide:edit-2" class="w-4 h-4" />
+          <span>Chỉnh sửa</span>
         </button>
       </div>
     </div>

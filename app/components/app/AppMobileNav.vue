@@ -2,9 +2,9 @@
 const route = useRoute()
 
 const tabs = [
-  { label: 'Tạo bài', icon: '✏️', to: '/app/generate' },
-  { label: 'Lịch sử', icon: '📋', to: '/app/history' },
-  { label: 'Cài đặt', icon: '⚙️', to: '/app/settings' },
+  { label: 'Tạo bài', icon: 'lucide:edit-2', to: '/app/generate' },
+  { label: 'Lịch sử', icon: 'lucide:list', to: '/app/history' },
+  { label: 'Cài đặt', icon: 'lucide:settings', to: '/app/settings' },
 ]
 
 function isActive(to: string) {
@@ -27,7 +27,7 @@ function isActive(to: string) {
           color: isActive(tab.to) ? 'var(--p-on-background)' : 'var(--p-on-surface-variant)'
         }"
       >
-        <span class="text-base leading-none">{{ tab.icon }}</span>
+        <Icon :name="tab.icon" class="w-5 h-5" />
         <span class="font-mono text-[11px] font-medium leading-none">{{ tab.label }}</span>
       </NuxtLink>
     </div>

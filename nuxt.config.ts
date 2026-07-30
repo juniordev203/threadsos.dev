@@ -7,13 +7,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
   // --- Modules ---
-  modules: [
-    '@nuxt/eslint',
-    '@nuxt/image',
-    '@nuxt/ui',
-    '@clerk/nuxt',
-    '@nuxtjs/google-fonts',
-  ],
+  modules: ['@nuxt/eslint', '@nuxt/image', '@nuxt/ui', '@clerk/nuxt', '@nuxtjs/google-fonts', '@nuxt/icon'],
 
   // --- Runtime Config (env variables) ---
   runtimeConfig: {

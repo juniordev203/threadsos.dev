@@ -174,7 +174,7 @@ async function handleSave() {
               </span>
               <span
                 v-if="selectedTone === tone.slug"
-                class="font-mono text-xs px-2 py-0.5 border"
+                class="font-mono text-xs px-2 py-0.5 border flex items-center justify-center gap-1"
                 :style="{
                   backgroundColor: 'var(--p-primary)',
                   color: 'var(--p-on-primary)',
@@ -182,7 +182,7 @@ async function handleSave() {
                   borderRadius: 'var(--radius-full)'
                 }"
               >
-                ✓ Đã chọn
+                <Icon name="lucide:check" class="w-3.5 h-3.5" /> Đã chọn
               </span>
             </div>
             <p class="text-body-sm mt-1" :style="{ color: 'var(--p-on-surface-variant)' }">
@@ -244,10 +244,10 @@ async function handleSave() {
 
       <p
         v-if="showSaveSuccess"
-        class="text-center font-mono text-xs transition-opacity"
+        class="text-center font-mono text-xs transition-opacity flex items-center justify-center gap-1.5"
         :style="{ color: 'var(--p-primary)' }"
       >
-        ✓ Đã lưu thay đổi cài đặt thành công!
+        <Icon name="lucide:check" class="w-4 h-4" /> Đã lưu thay đổi cài đặt thành công!
       </p>
     </form>
   </div>
