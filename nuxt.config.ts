@@ -18,16 +18,17 @@ export default defineNuxtConfig({
   // --- Runtime Config (env variables) ---
   runtimeConfig: {
     // Server-only (not exposed to client)
-    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || '',
+    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || '',
     openaiApiKey: process.env.OPENAI_API_KEY || '',
     clerkSecretKey: process.env.CLERK_SECRET_KEY || '',
 
     // Public (exposed to client)
     public: {
       supabaseUrl: process.env.SUPABASE_URL || '',
-      supabaseAnonKey: process.env.SUPABASE_ANON_KEY || '',
+      supabaseAnonKey: process.env.SUPABASE_ANON_KEY || process.env.SUPABASE_KEY || '',
     },
   },
+
 
   // --- Google Fonts ---
   googleFonts: {

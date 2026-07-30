@@ -18,14 +18,15 @@ export function useSupabaseServer(): SupabaseClient {
   const config = useRuntimeConfig()
 
   const supabaseUrl = config.public.supabaseUrl
-  const supabaseKey = config.supabaseServiceRoleKey
+  const supabaseKey = config.supabaseServiceRoleKey || config.public.supabaseAnonKey
 
   if (!supabaseUrl || !supabaseKey) {
     throw new Error(
-      '[useSupabaseServer] Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY. ' +
+      '[useSupabaseServer] Missing SUPABASE_URL or SUPABASE_KEY. ' +
       'Check your .env file and runtimeConfig in nuxt.config.ts.',
     )
   }
+
 
   return createClient(supabaseUrl, supabaseKey, {
     auth: {
