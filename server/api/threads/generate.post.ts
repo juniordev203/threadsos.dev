@@ -105,9 +105,13 @@ QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
     generatedText = generatedText.replace(/^Dưới đây là.*?:/i, '').trim()
   } catch (err: any) {
     console.error('[Generate Thread API] OpenAI API error:', err)
+    
+    // Extract actual OpenAI error message if present, or fallback to generic
+    const actualError = err.message || err.toString()
+    
     throw createError({
       statusCode: 503,
-      statusMessage: 'AI API Error: Vui lòng kiểm tra lại kết nối OpenAI (hoặc OpenAI Key).',
+      statusMessage: `AI Error: ${actualError}`,
       data: err.message
     })
   }
