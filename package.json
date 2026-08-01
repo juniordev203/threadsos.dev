@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@clerk/nuxt": "^2.6.23",
+    "@google/generative-ai": "^0.24.1",
     "@nuxt/eslint": "1.16.0",
     "@nuxt/icon": "2.4.1",
     "@nuxt/image": "2.0.0",
@@ -40,7 +41,6 @@
     "eslint": "^9.39.5",
     "h3": "^1.15.11",
     "nuxt": "^4.5.0",
-    "openai": "^7.1.0",
     "storybook": "~9.0.18",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",

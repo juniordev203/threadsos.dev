@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Server-only (not exposed to client)
     supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_KEY || '',
-    openaiApiKey: process.env.OPENAI_API_KEY || '',
+    geminiApiKey: process.env.GEMINI_API_KEY || '',
 
     // Public (exposed to client)
     public: {

@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
   let generatedText = ''
 
   try {
-    const openai = useOpenAI()
+    const gemini = useGemini()
 
     const frameworkInstructions: Record<string, string> = {
       unpopular_opinion: `Framework: UNPOPULAR OPINION (Quan điểm trái chiều)
@@ -89,24 +89,32 @@ QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
 6. EMOJI: KHÔNG dùng hoặc dùng TỐI ĐA 1 emoji cho toàn bộ bài viết. Tập trung vào ngôn từ.
 7. LINH HOẠT: Không lặp lại y hệt cấu trúc rập khuôn. Hãy sáng tạo dựa trên ngữ cảnh thực tế của ý tưởng thô.`
 
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
-      messages: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads thật sâu sắc và chi tiết ngay:` },
-      ],
-      temperature: 0.7,
-      max_tokens: 1000,
+    const model = gemini.getGenerativeModel({
+      model: 'gemini-1.5-flash',
+      systemInstruction: systemPrompt,
     })
 
-    generatedText = completion.choices[0]?.message?.content?.trim() || ''
+    const result = await model.generateContent({
+      contents: [
+        {
+          role: 'user',
+          parts: [{ text: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads thật sâu sắc và chi tiết ngay:` }]
+        }
+      ],
+      generationConfig: {
+        temperature: 0.7,
+        maxOutputTokens: 1000,
+      }
+    })
+
+    generatedText = result.response.text().trim()
     
-    // Fallback in case OpenAI returns weird prefixes
+    // Fallback in case Gemini returns weird prefixes
     generatedText = generatedText.replace(/^Dưới đây là.*?:/i, '').trim()
   } catch (err: any) {
-    console.error('[Generate Thread API] OpenAI API error:', err)
+    console.error('[Generate Thread API] Gemini API error:', err)
     
-    // Extract actual OpenAI error message if present, or fallback to generic
+    // Extract actual Gemini error message if present, or fallback to generic
     const actualError = err.message || err.toString()
     
     throw createError({
