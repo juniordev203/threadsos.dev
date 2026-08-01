@@ -1,10 +1,10 @@
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import { GoogleGenAI } from '@google/genai'
 
 /**
- * Creates and returns a GoogleGenerativeAI client configured with server-side API key.
+ * Creates and returns a GoogleGenAI client configured with server-side API key.
  * Reads key securely from Nitro runtimeConfig.
  */
-export function useGemini(): GoogleGenerativeAI {
+export function useGemini(): GoogleGenAI {
   const config = useRuntimeConfig()
   const apiKey = config.geminiApiKey
 
@@ -14,5 +14,5 @@ export function useGemini(): GoogleGenerativeAI {
     )
   }
 
-  return new GoogleGenerativeAI(apiKey)
+  return new GoogleGenAI({ apiKey })
 }

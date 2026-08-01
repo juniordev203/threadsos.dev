@@ -89,25 +89,19 @@ QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
 6. EMOJI: KHÔNG dùng hoặc dùng TỐI ĐA 1 emoji cho toàn bộ bài viết. Tập trung vào ngôn từ.
 7. LINH HOẠT: Không lặp lại y hệt cấu trúc rập khuôn. Hãy sáng tạo dựa trên ngữ cảnh thực tế của ý tưởng thô.`
 
-    const model = gemini.getGenerativeModel({
-      model: 'gemini-1.5-flash',
-      systemInstruction: systemPrompt,
-    })
-
-    const result = await model.generateContent({
-      contents: [
-        {
-          role: 'user',
-          parts: [{ text: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads thật sâu sắc và chi tiết ngay:` }]
-        }
-      ],
-      generationConfig: {
+    const result = await gemini.models.generateContent({
+      model: 'gemini-3.6-flash',
+      contents: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads thật sâu sắc và chi tiết ngay:`,
+      config: {
+        systemInstruction: systemPrompt,
         temperature: 0.7,
         maxOutputTokens: 1000,
       }
     })
 
-    generatedText = result.response.text().trim()
+    // @ts-ignore - The response has .text getter in newer SDKs
+    generatedText = result.text.trim()
+
     
     // Fallback in case Gemini returns weird prefixes
     generatedText = generatedText.replace(/^Dưới đây là.*?:/i, '').trim()
