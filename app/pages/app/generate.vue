@@ -51,8 +51,9 @@ const handleGenerate = async () => {
       user_id: user.value?.id
     })
     generatedContent.value = thread.generated_text
-  } catch (err) {
+  } catch (err: any) {
     console.error('[Generate Page] Error:', err)
+    alert(err?.data?.statusMessage || err?.message || 'Lỗi kết nối AI. Vui lòng thử lại sau.')
   } finally {
     isGenerating.value = false
   }

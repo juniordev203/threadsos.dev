@@ -103,9 +103,13 @@ QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
     
     // Fallback in case OpenAI returns weird prefixes
     generatedText = generatedText.replace(/^Dưới đây là.*?:/i, '').trim()
-  } catch (err: unknown) {
-    console.warn('[Generate Thread API] OpenAI API fallback:', err)
-    generatedText = generateFallbackThread(rawInput, framework, tone)
+  } catch (err: any) {
+    console.error('[Generate Thread API] OpenAI API error:', err)
+    throw createError({
+      statusCode: 503,
+      statusMessage: 'AI API Error: Vui lòng kiểm tra lại kết nối OpenAI (hoặc OpenAI Key).',
+      data: err.message
+    })
   }
 
   // Optionally save to Supabase if user_id provided
@@ -157,19 +161,3 @@ QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
   }
 })
 
-/**
- * Fallback local generator when OpenAI API is not available
- */
-function generateFallbackThread(input: string, framework: string, tone: string): string {
-  const tonePrefix = tone === 'friendly' ? 'Chào mọi người, ' : ''
-  
-  if (framework === 'unpopular_opinion') {
-    return `${tonePrefix}Quan điểm trái chiều: ${input}\n\nĐa số mọi người đang tiếp cận vấn đề này hoàn toàn sai cách. Họ chỉ tập trung giải quyết cái ngọn mà quên mất đi gốc rễ thực sự của vấn đề.\n\nSau một thời gian dài chật vật và thử nghiệm thực tế, tôi nhận ra điều quan trọng nhất không phải là cố gắng làm nhiều hơn hay nhồi nhét thêm kiến thức.\n\nBí quyết thực sự nằm ở việc: Bắt đầu làm đúng thứ ngay từ những bước đầu tiên. Giảm bớt sự xao nhãng và tập trung vào cốt lõi.\n\nBạn nghĩ sao về góc nhìn này? Có ai đang gặp phải tình trạng tương tự không? Đổ comment bên dưới nhé!`
-  }
-
-  if (framework === 'lesson_learned') {
-    return `${tonePrefix}Sai lầm đắt giá nhất của tôi khi giải quyết bài toán "${input}":\n\nTôi từng mất rất nhiều thời gian, công sức và cả tiền bạc vì tự mày mò mà không chịu tìm hiểu hay hỏi han những người đi trước.\n\nNhững bài học xương máu tôi rút ra được:\n\n1. Tập trung vào giá trị cốt lõi thay vì chạy theo các thủ thuật bề nổi.\n2. Đo lường kết quả liên tục để biết mình đang đi đúng hướng hay không.\n3. Dám thừa nhận sai và sửa chữa ngay khi phát hiện vấn đề.\n\nĐừng lặp lại vết xe đổ này giống tôi. Hãy đi chậm mà chắc!`
-  }
-
-  return `${tonePrefix}Ý tưởng về ${input}:\n\nĐây là một bài học và góc nhìn thực tế mà tôi muốn chia sẻ với mọi người sau quá trình dài trải nghiệm.\n\nNhiều người thường nghĩ vấn đề này rất khó nhằn. Nhưng thực ra, khi chúng ta biết cách bẻ nhỏ nó ra thành từng bước cụ thể, mọi thứ lại trở nên vô cùng đơn giản và rõ ràng.\n\nQuan trọng nhất là sự kiên trì và tư duy đúng đắn.\n\nBạn có đang gặp khúc mắc tương tự trên hành trình của mình không? Chia sẻ bên dưới nhé.`
-}
