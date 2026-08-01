@@ -67,32 +67,36 @@ export default defineEventHandler(async (event) => {
     const fwInstruction = frameworkInstructions[framework] || frameworkInstructions['unpopular_opinion']
 
     const systemPrompt = `Bạn là một chuyên gia sáng tạo nội dung Threads hàng đầu (Top 1% Creator).
+Bạn viết cực kỳ cuốn hút, sắc bén, có tư duy sâu sắc và không bao giờ rập khuôn. Mọi bài viết của bạn đều khiến người đọc phải dừng lại suy ngẫm hoặc tranh luận.
+
 User Profile:
 - Lĩnh vực: ${niche}
-- Giọng văn: ${tone} (BẮT BUỘC tuân thủ đúng tone này, viết như người thật đang trò chuyện trên Threads).
+- Giọng văn: ${tone} (BẮT BUỘC tuân thủ đúng tone này, viết như một người thật đang trò chuyện).
 - Giới thiệu bản thân: ${bio}
 
 NHIỆM VỤ CỐT LÕI:
-Viết 1 bài Threads ĐỘC LẬP dựa trên ý tưởng thô của user.
+Viết 1 bài Threads ĐỘC LẬP, SÁNG TẠO dựa trên ý tưởng thô của user.
 
-CẤU TRÚC BẮT BUỘC:
+CẤU TRÚC ĐỊNH HƯỚNG:
 ${fwInstruction}
 
-QUY TẮC ANTI-AI (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
-1. TUYỆT ĐỐI KHÔNG dùng từ nối sáo rỗng của AI: "Tuy nhiên", "Hơn nữa", "Tóm lại", "Trong thế giới ngày nay", "Hãy nhớ rằng", "Thực tế là", "Bên cạnh đó", "Đừng ngần ngại", "Chìa khóa ở đây là", "Thử tưởng tượng".
-2. KHÔNG bắt đầu bằng: "Dưới đây là bài viết của bạn", "Chào bạn", "Tuyệt vời". Đi thẳng vào HOOK của bài viết ngay lập tức.
-3. Độ dài: Tối đa 250 từ. Viết câu ngắn, ngắt dòng liên tục cho dễ đọc trên mobile.
-4. Emoji: Dùng tối đa 2 emoji cho toàn bộ bài. Không lạm dụng.
-5. Giọng điệu: Viết tự nhiên, đời thường, hơi "đời" và sắc bén.`
+QUY TẮC BẮT BUỘC (RẤT QUAN TRỌNG - NẾU VI PHẠM SẼ BỊ PHẠT):
+1. ĐỘ DÀI & CHI TIẾT: Viết sâu sắc, phân tích cụ thể, có ví dụ hoặc câu chuyện rõ ràng. Bài viết PHẢI dài ít nhất 250 - 400 từ. KHÔNG viết quá ngắn hoặc hời hợt.
+2. KHÔNG DÙNG TỪ NGỮ AI SÁO RỖNG: Tuyệt đối tránh các cụm từ: "Tuy nhiên", "Hơn nữa", "Tóm lại", "Trong thế giới ngày nay", "Hãy nhớ rằng", "Thực tế là", "Bên cạnh đó", "Đừng ngần ngại", "Chìa khóa ở đây là", "Thử tưởng tượng", "Cuối cùng thì".
+3. HOOK ẤN TƯỢNG: Đi thẳng vào vấn đề ngay câu đầu tiên. KHÔNG bắt đầu bằng các câu chào hỏi như: "Dưới đây là bài viết của bạn", "Chào bạn", "Tuyệt vời".
+4. TRÌNH BÀY DỄ ĐỌC: Viết câu ngắn, ngắt dòng liên tục (mỗi đoạn 1-3 câu). Giữa các đoạn phải có khoảng trắng.
+5. GIỌNG ĐIỆU CÁ NHÂN HÓA: Viết tự nhiên, đời thường, hơi "đời" và sắc bén, có quan điểm cá nhân mạnh mẽ. Đừng viết chung chung, hãy cụ thể hóa.
+6. EMOJI: KHÔNG dùng hoặc dùng TỐI ĐA 1 emoji cho toàn bộ bài viết. Tập trung vào ngôn từ.
+7. LINH HOẠT: Không lặp lại y hệt cấu trúc rập khuôn. Hãy sáng tạo dựa trên ngữ cảnh thực tế của ý tưởng thô.`
 
     const completion = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads ngay:` },
+        { role: 'user', content: `Ý tưởng thô: ${rawInput}\n\nHãy viết bài Threads thật sâu sắc và chi tiết ngay:` },
       ],
       temperature: 0.7,
-      max_tokens: 500,
+      max_tokens: 1000,
     })
 
     generatedText = completion.choices[0]?.message?.content?.trim() || ''
@@ -160,12 +164,12 @@ function generateFallbackThread(input: string, framework: string, tone: string):
   const tonePrefix = tone === 'friendly' ? 'Chào mọi người, ' : ''
   
   if (framework === 'unpopular_opinion') {
-    return `${tonePrefix}Quan điểm trái chiều: ${input}\n\nĐa số mọi người đang tiếp cận vấn đề này sai cách. Họ tập trung vào ngọn mà quên mất gốc rễ.\n\nSau khi thử nghiệm thực tế, tôi nhận ra điều quan trọng nhất không phải làm nhiều hơn, mà là làm đúng thứ ngay từ đầu.\n\nBạn nghĩ sao về góc nhìn này? Đổ comment bên dưới nhé.`
+    return `${tonePrefix}Quan điểm trái chiều: ${input}\n\nĐa số mọi người đang tiếp cận vấn đề này hoàn toàn sai cách. Họ chỉ tập trung giải quyết cái ngọn mà quên mất đi gốc rễ thực sự của vấn đề.\n\nSau một thời gian dài chật vật và thử nghiệm thực tế, tôi nhận ra điều quan trọng nhất không phải là cố gắng làm nhiều hơn hay nhồi nhét thêm kiến thức.\n\nBí quyết thực sự nằm ở việc: Bắt đầu làm đúng thứ ngay từ những bước đầu tiên. Giảm bớt sự xao nhãng và tập trung vào cốt lõi.\n\nBạn nghĩ sao về góc nhìn này? Có ai đang gặp phải tình trạng tương tự không? Đổ comment bên dưới nhé!`
   }
 
   if (framework === 'lesson_learned') {
-    return `${tonePrefix}Sai lầm lớn nhất của tôi liên quan đến "${input}":\n\nTôi từng mất rất nhiều thời gian vì tự mày mò mà không hỏi người đi trước.\n\nBài học rút ra:\n1. Tập trung vào cốt lõi\n2. Đo lường kết quả liên tục\n3. Sửa sai ngay khi phát hiện\n\nĐừng mắc lại sai lầm này giống tôi.`
+    return `${tonePrefix}Sai lầm đắt giá nhất của tôi khi giải quyết bài toán "${input}":\n\nTôi từng mất rất nhiều thời gian, công sức và cả tiền bạc vì tự mày mò mà không chịu tìm hiểu hay hỏi han những người đi trước.\n\nNhững bài học xương máu tôi rút ra được:\n\n1. Tập trung vào giá trị cốt lõi thay vì chạy theo các thủ thuật bề nổi.\n2. Đo lường kết quả liên tục để biết mình đang đi đúng hướng hay không.\n3. Dám thừa nhận sai và sửa chữa ngay khi phát hiện vấn đề.\n\nĐừng lặp lại vết xe đổ này giống tôi. Hãy đi chậm mà chắc!`
   }
 
-  return `${tonePrefix}Ý tưởng về ${input}:\n\nĐây là câu chuyện và góc nhìn thực tế mà tôi muốn chia sẻ.\n\nNhiều người nghĩ khó, nhưng khi chia nhỏ ra từng bước thì mọi thứ trở nên đơn giản hơn nhiều.\n\nBạn có đang gặp vấn đề tương tự không?`
+  return `${tonePrefix}Ý tưởng về ${input}:\n\nĐây là một bài học và góc nhìn thực tế mà tôi muốn chia sẻ với mọi người sau quá trình dài trải nghiệm.\n\nNhiều người thường nghĩ vấn đề này rất khó nhằn. Nhưng thực ra, khi chúng ta biết cách bẻ nhỏ nó ra thành từng bước cụ thể, mọi thứ lại trở nên vô cùng đơn giản và rõ ràng.\n\nQuan trọng nhất là sự kiên trì và tư duy đúng đắn.\n\nBạn có đang gặp khúc mắc tương tự trên hành trình của mình không? Chia sẻ bên dưới nhé.`
 }

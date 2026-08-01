@@ -44,30 +44,30 @@ const userInitials = computed(() => {
       <button
         type="button"
         title="Like"
-        class="text-sm text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
+        class="text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
       >
-        ♡
+        <Icon name="lucide:heart" class="w-4 h-4" />
       </button>
       <button
         type="button"
         title="Comment"
-        class="text-sm text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
+        class="text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
       >
-        💬
+        <Icon name="lucide:message-circle" class="w-4 h-4" />
       </button>
       <button
         type="button"
         title="Repost"
-        class="text-sm text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
+        class="text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
       >
-        ⟳
+        <Icon name="lucide:repeat" class="w-4 h-4" />
       </button>
       <button
         type="button"
-        title="Bookmark"
-        class="text-sm text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
+        title="Share"
+        class="text-[var(--p-on-surface-variant)] hover:text-[var(--p-on-surface)] transition-colors cursor-pointer"
       >
-        🔖
+        <Icon name="lucide:send" class="w-4 h-4" />
       </button>
     </div>
   </div>
